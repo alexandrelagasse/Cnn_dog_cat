@@ -47,45 +47,18 @@ unzip dogs-vs-cats.zip -d data/
 - Precision: 90.41%
 - Recall: 89.43%
 
+## Model Improvement
+
+To improve the model's performance, consider the following strategies:
+
+- **Data Augmentation**: Use techniques like rotation, flipping, and zooming to increase the diversity of the training data.
+- **Hyperparameter Tuning**: Experiment with different learning rates, batch sizes, and the number of epochs to find the optimal configuration.
+- **Architecture Modifications**: Adjust the number of layers, filters, and neurons to better capture the features of the images.
+- **Transfer Learning**: Utilize pre-trained models like VGG16 or ResNet to leverage their learned features for better classification.
+
 ## License
 
 This project is under the MIT license. See the LICENSE file for more details.
-
-# Downloading the Dataset
-To download data from Kaggle, you first need to install the Kaggle API using pip:
-
-```bash
-pip install kaggle
-```
-Then, you can download the Dogs vs Cats dataset:
-
-```bash
-kaggle competitions download -c dogs-vs-cats
-```
-# Importing Required Libraries
-```python
-from keras.models import Sequential
-from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
-from keras.preprocessing.image import ImageDataGenerator
-```
-
-# Data Preparation
-
-```python
-datagen = ImageDataGenerator(rescale=1./255)
-
-train_generator = datagen.flow_from_directory(
-    'data/train',
-    target_size=(64, 64),
-    batch_size=32,
-    class_mode='binary')
-
-validation_generator = datagen.flow_from_directory(
-    'data/validation',
-    target_size=(64, 64),
-    batch_size=32,
-    class_mode='binary')
-```
 
 # Explanation of a Convolutional Layer
 
@@ -105,38 +78,6 @@ However, the operation performed by the pooling layer is different from that of 
 
 The most common form of pooling is max pooling, where the kernel simply selects the maximum value among all the values it covers.
 
-# Building the CNN Model
-```python
-model = Sequential()
-
-model.add(Conv2D(32, (3, 3), activation='relu', input_shape=(64, 64, 3)))
-model.add(MaxPooling2D(pool_size=(2, 2)))
-
-model.add(Conv2D(64, (3, 3), activation='relu'))
-model.add(MaxPooling2D(pool_size=(2, 2)))
-
-model.add(Flatten())
-model.add(Dense(128, activation='relu'))
-model.add(Dense(1, activation='sigmoid'))
-
-model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
-```
-
-# Training the Model
-
-```python
-model.fit(
-    train_generator,
-    epochs=10,
-    validation_data=validation_generator)
-```
-# Model Evaluation
-
-```python
-score = model.evaluate(validation_generator)
-print('Test loss:', score[0])
-print('Test accuracy:', score[1])
-```
 # Bonus Exercise:
 
 ### Adding Custom Images for Training
